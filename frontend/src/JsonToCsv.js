@@ -109,11 +109,10 @@ function JSONtoCSVApp() {
       str += linea + "\r\n";
     });
     setResult(result => result.concat(titulos + "\r\n" + str))
-    //console.log(titulos + "\r\n" + str)
 }
   return (
     <div id="csv">
-      <div className="row">
+      <div className="row mt-3">
         <h1 className="col-12 pt-3 mx-5">JSON a CSV</h1>
       </div>
       <div className="row mx-5">
