@@ -67,26 +67,31 @@ function JSONtoCSVApp() {
       alert("No hay datos que convertir")
       return
     }
-    let rows = typeof objArray !== "object" ? JSON.parse(dato) : dato;
-      for (const [key, value] of Object.entries(rows)) {  
-      if (Object.keys(value).length>1) {
-        if (value.length===undefined) {
-          convertToCsv(rows)
-        } else {
-          convertToCsv(value)
-        }
-        return
-      } else {
-        if (Object.keys(value).length===0) {
-          var objtemp=[]
-          objtemp.push(rows)
-          convertToCsv(objtemp)
+    try {
+      let rows = typeof objArray !== "object" ? JSON.parse(dato) : dato;
+        for (const [key, value] of Object.entries(rows)) {  
+        if (Object.keys(value).length>1) {
+          if (value.length===undefined) {
+            convertToCsv(rows)
+          } else {
+            convertToCsv(value)
+          }
           return
         } else {
-          buscar(JSON.stringify(value)) 
-        }        
-      }      
-    } 
+          if (Object.keys(value).length===0) {
+            var objtemp=[]
+            objtemp.push(rows)
+            convertToCsv(objtemp)
+            return
+          } else {
+            buscar(JSON.stringify(value)) 
+          }        
+        }      
+      } 
+    } catch (error) {
+      alert("The entered text does not look like a JSON")
+    }
+    
   }
   const convertToCsv=(estructure)=>{
   let filas = (estructure);
@@ -157,60 +162,3 @@ function JSONtoCSVApp() {
 }
 
 export default JSONtoCSVApp;
-
-
-
-/* const convertToCsv=()=>{
-  let rows = JSON.parse(info);
-    let header = "";
-    Object.keys(rows[0]).map(pr => (header += pr + ";"));
-    let str = "";
-    rows.forEach(row => {
-      let line = "";
-      let columns =
-        typeof row !== "object" ? JSON.parse(row) : Object.values(row);
-      columns.forEach(column => {
-        if (line !== "") {
-          line += ";";
-        }
-        if (typeof column === "object") {
-          line += JSON.stringify(column);
-        } else {
-          line += column;
-        }
-      });
-      str += line + "\r\n";
-    });
-    setResult(header + "\r\n" + str)
-} 
-
-
-const buscar=(dato)=>{
-    let rows = typeof objArray !== "object" ? JSON.parse(dato) : dato;
-      for (const [key, value] of Object.entries(rows)) {  
-        console.log(Object.keys(value).length)     
-      if (Object.keys(value).length>1) {
-        console.log("1-"+Object.keys(value).length)
-        console.log(value)
-        console.log(value.length)
-        console.log(rows)
-        console.log(rows.length)
-        if (value.length===undefined) {
-          convertToCsv(rows)
-        } else {
-          convertToCsv(value)
-        }
-        return
-      } else {
-        if (Object.keys(value).length===0) {
-          var objtemp=[]
-          objtemp.push(rows)
-          convertToCsv(objtemp)
-        } else {
-          console.log("2")
-          buscar(JSON.stringify(value)) 
-        }        
-      }      
-    } 
-  }
-*/
